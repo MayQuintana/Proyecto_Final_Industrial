@@ -87,9 +87,111 @@ void setup() {
 }
 
 void loop(){
-  WiFiClient client = server.available();   // busca a clientes que se vayan uniendo 
+  WiFiClient client = server.available();   // Escucha a clientes entrantes 
 
+  if (client) {                             // Si queremos que un nuevo cliente se conecte,
+    Serial.println("New Client.");          // imprimir un mensaje en el puerto serial
+    String currentLine = "";                // hacer una cadena para contener los datos entrantes del cliente
+    while (client.connected()) {            // Bucle mientras la cliente está conectada
+      if (client.available()) {             // Si hay bytes para leer de la cliente,
+        char c = client.read();             // leer un byte, despues
+        Serial.write(c);                    //imprímalo en el monitor de serie
+        header += c;
+        if (c == '\n') {                   // si el byte es un carácter de nueva línea
+          // si la línea actual está en blanco, tiene dos caracteres de nueva línea seguidos.
+          // ese es el final de la solicitud HTTP del cliente, así que envíe una respuesta:
+          if (currentLine.length() == 0) {
+            
+// Los encabezados HTTP siempre comienzan con un código de respuesta (por ejemplo, HTTP / 1.1 200 OK)
+            // y un tipo de contenido para que el cliente sepa lo que viene, luego una línea en blanco:
+            client.println("HTTP/1.1 200 OK");
+            client.println("Content-type:text/html");
+            client.println("Connection: close");
+            client.println();
+            
+            // prende el GPIOs on and off luz de los cuartos
+            if (header.indexOf("GET /16/on") >= 0) {
+              Serial.println("GPIO 16 on");
+              output16State = "on";
+              digitalWrite(output16, HIGH);
+            } else if (header.indexOf("GET /16/off") >= 0) {
+              Serial.println("GPIO 16 off");
+              output16State = "off";
+              digitalWrite(output16, LOW);
+            } else if (header.indexOf("GET /5/on") >= 0) {
+              Serial.println("GPIO 5 on");
+              output5State = "on";
+              digitalWrite(output5, HIGH);
+            } else if (header.indexOf("GET /5/off") >= 0) {
+              Serial.println("GPIO 5 off");
+              output5State = "off";
+              digitalWrite(output5, LOW);
+            } else if (header.indexOf("GET /4/on") >= 0) {
+              Serial.println("GPIO 4 on");
+              output4State = "on";
+              digitalWrite(output4, HIGH);
+              servo_4.write(90);
+              delay(1000);
+            } else if (header.indexOf("GET /4/off") >= 0) {
+              Serial.println("GPIO 4 off");
+              output4State = "off";
+              servo_4.write(0);
+              delay(1000);
+              digitalWrite(output4, LOW);
+            } else if (header.indexOf("GET /3/on") >= 0) {
+              Serial.println("GPIO 3 on");
+              output3State = "on";
+              digitalWrite(output3, HIGH);
+            } else if (header.indexOf("GET /3/off") >= 0) {
+              Serial.println("GPIO 3 off");
+              output3State = "off";
+              digitalWrite(output3, LOW);
+            } else if (header.indexOf("GET /1/on") >= 0) {
+              Serial.println("GPIO 1 on");
+              output1State = "on";
+              digitalWrite(output1, HIGH);
+            } else if (header.indexOf("GET /1/off") >= 0) {
+              Serial.println("GPIO 1 off");
+              output1State = "off";
+              digitalWrite(output1, LOW);
+            } else if (header.indexOf("GET /0/on") >= 0) {
+              Serial.println("GPIO 0 on");
+              output0State = "on";
+              digitalWrite(output0, HIGH);
+            } else if (header.indexOf("GET /0/off") >= 0) {
+              Serial.println("GPIO 0 off");
+              output0State = "off";
+              digitalWrite(output0, LOW);
+            } else if (header.indexOf("GET /2/on") >= 0) {
+              Serial.println("GPIO 2 on");
+              output2State = "on";
+              digitalWrite(output2, HIGH);
+              servo_2.write(90);
+              delay(1000);
+            } else if (header.indexOf("GET /2/off") >= 0) {
+              Serial.println("GPIO 2 off");
+              output2State = "off";
+              servo_2.write(0);
+              delay(1000);
+              digitalWrite(output2, LOW);
+            } else if (header.indexOf("GET /14/on") >= 0) {
+              Serial.println("GPIO 14 on");
+              output14State = "on";
+              digitalWrite(output14, HIGH);
+            } else if (header.indexOf("GET /14/off") >= 0) {
+              Serial.println("GPIO 14 off");
+              output14State = "off";
+              digitalWrite(output14, LOW);
+            } else if (header.indexOf("GET /12/on") >= 0) {
+              Serial.println("GPIO 12 on");
+              output12State = "on";
+              digitalWrite(output12, HIGH);
+            } else if (header.indexOf("GET /12/off") >= 0) {
+              Serial.println("GPIO 12 off");
+              output12State = "off";
+              digitalWrite(output12, LOW);
             }
+            
             
             // Despliega pagina web 
             client.println("<!DOCTYPE html><html>");
@@ -123,7 +225,76 @@ void loop(){
             } else {
               client.println("<p><a href=\"/5/off\"><button class=\"button button2\">OFF</button></a></p>");
             } 
-               //aqui nos quedanos 
+               
+               
+           // Muestra el estado actual y los botones ON / OFF para GPIO 4 
+            client.println("<p>Cuarto 3 - State " + output3State + "</p>");
+            // Si output4State está desactivado, muestra el botón ON      
+            if (output3State=="off") {
+              client.println("<p><a href=\"/3/on\"><button class=\"button\">ON</button></a></p>");
+            } else {
+              client.println("<p><a href=\"/3/off\"><button class=\"button button2\">OFF</button></a></p>");
+            }
+
+            client.println("<p>Cuarto 4 - State " + output1State + "</p>");
+            if (output1State=="off") {
+              client.println("<p><a href=\"/1/on\"><button class=\"button\">ON</button></a></p>");
+            } else {
+              client.println("<p><a href=\"/1/off\"><button class=\"button button2\">OFF</button></a></p>");
+            } 
+
+            client.println("<p>Cuarto 5 - State " + output0State + "</p>");
+            if (output0State=="off") {
+              client.println("<p><a href=\"/0/on\"><button class=\"button\">ON</button></a></p>");
+            } else {
+              client.println("<p><a href=\"/0/off\"><button class=\"button button2\">OFF</button></a></p>");
+            } 
+
+            //motor puerta
+            client.println("<p>Puerta Abrir/Cerrar - State " + output4State + "</p>");
+            // If the output4State is off, it displays the ON button       
+            if (output4State=="off") {
+              client.println("<p><a href=\"/4/on\"><button class=\"button\">ON</button></a></p>");
+            } else {
+              client.println("<p><a href=\"/4/off\"><button class=\"button button2\">OFF</button></a></p>");
+            }
+            //garage
+            client.println("<p>Puerta Abrir/Cerrar - State " + output2State + "</p>");
+            // If the output4State is off, it displays the ON button       
+            if (output2State=="off") {
+              client.println("<p><a href=\"/2/on\"><button class=\"button\">ON</button></a></p>");
+            } else {
+              client.println("<p><a href=\"/2/off\"><button class=\"button button2\">OFF</button></a></p>");
+            }
+
+            // Ventiladores.
+            client.println("<p>Ventilacion Cuarto 1 - State " + output14State + "</p>");
+            if (output14State=="off") {
+              client.println("<p><a href=\"/14/on\"><button class=\"button\">ON</button></a></p>");
+            } else {
+              client.println("<p><a href=\"/14/off\"><button class=\"button button2\">OFF</button></a></p>");
+            }
+            client.println("<p>Ventilacion Cuarto 2 - State " + output12State + "</p>");
+            if (output12State=="off") {
+              client.println("<p><a href=\"/12/on\"><button class=\"button\">ON</button></a></p>");
+            } else {
+              client.println("<p><a href=\"/12/off\"><button class=\"button button2\">OFF</button></a></p>");
+            }
+            
+            client.println("</body></html>");
+            
+            // La respuesta HTTP termina con otra línea en blanco
+            client.println();
+            // Salir del bucle while
+            break;
+          } else { // si tienes una nueva línea, borra currentLine
+            currentLine = "";
+          }
+        } else if (c != '\r') {  // si tiene algo más que un carácter de retorno de carro,
+          currentLine += c;      // agregarlo al final de currentLine
+        }
+      }
+    }
             
     // Limpia el encabezado 
     header = "";
