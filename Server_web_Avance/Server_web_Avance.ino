@@ -2,7 +2,7 @@
 #include <Servo.h>
 
 // Ponemos nuestro wifi para probar 
-const char* ssid     = /*"INFINITUM502D04" */"Martin_Garcia_H";
+const char* ssid     = /*"INFINITUM502D04" */"Martin_Garcia_H*";
 const char* password = /*"23D581E62F" */"M4451072841g4582873H";
 
 // Cambiamos el servidor web al puerto 80
