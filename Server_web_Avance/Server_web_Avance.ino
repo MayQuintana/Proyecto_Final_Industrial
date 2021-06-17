@@ -1,5 +1,18 @@
 #include <WiFi.h>
 #include <ESP32Servo.h>
+<<<<<<< HEAD
+=======
+
+/****** Retardo***********/
+int periodo = 10;
+int periodo2=2000;
+int periodo3=1000;
+int periodo4=500;
+unsigned long tiempo = 0;
+
+/**************************/
+
+>>>>>>> d724e40d58ded634b36e37d145ae5fc2ff608414
 
 /****** Retardo***********/
 int periodo = 10;
@@ -73,6 +86,7 @@ void setup() {
   servo_2.write(0);
  // delay(2000);
   /***/
+<<<<<<< HEAD
   while (millis() < tiempo + periodo2){    
 /* ESPERA */
 }
@@ -80,16 +94,49 @@ void setup() {
   while (millis() < tiempo + periodo){
 /* ESPERA */
 }
+=======
+  while (millis() < tiempo + periodo2){
+
+
+    
+/* ESPERA */
+
+}
+  /***/
+
+  // Conetcta a  Wi-Fi con el SSID and contrasena que pusimos de ejemplo 
+ 
+  /*************************************/
+   //delay(10);
+  while (millis() < tiempo + periodo){
+
+
+    
+/* ESPERA */
+
+}
+/******************************************/
+>>>>>>> d724e40d58ded634b36e37d145ae5fc2ff608414
   Serial.println();
   WiFi.config(ip, gateway, subnet);
   Serial.print("Connecting to ");
   Serial.println(ssid);
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
+<<<<<<< HEAD
 
   while (millis() < tiempo + periodo4){
 /* ESPERA */
 }
+=======
+   // delay(500);
+
+  while (millis() < tiempo + periodo4){
+/* ESPERA */
+
+}
+    /****/
+>>>>>>> d724e40d58ded634b36e37d145ae5fc2ff608414
     Serial.print(".");
   }
   // Imprime el IP local y empieza el servidor web
@@ -146,13 +193,40 @@ void loop(){
               output4State = "on";
               digitalWrite(output4, HIGH);
               servo_4.write(90);
+<<<<<<< HEAD
               while (millis() < tiempo + periodo3){
+=======
+
+              /*****************/
+              //delay(1000);
+                  while (millis() < tiempo + periodo3){
+
+
+    
+                  /* ESPERA */
+
+                        }
+              /**************/
+>>>>>>> d724e40d58ded634b36e37d145ae5fc2ff608414
             } else if (header.indexOf("GET /4/off") >= 0) {
               Serial.println("GPIO 4 off");
               output4State = "off";
               servo_4.write(0);
+<<<<<<< HEAD
               while (millis() < tiempo + periodo3){
             }
+=======
+              /*****************/
+              //delay(1000);
+                  while (millis() < tiempo + periodo3){
+
+
+    
+                  /* ESPERA */
+
+                        }
+              /**************/
+>>>>>>> d724e40d58ded634b36e37d145ae5fc2ff608414
               digitalWrite(output4, LOW);
             } else if (header.indexOf("GET /3/on") >= 0) {
               Serial.println("GPIO 3 on");
@@ -183,6 +257,7 @@ void loop(){
               output2State = "on";
               digitalWrite(output2, HIGH);
               servo_2.write(90);
+<<<<<<< HEAD
               while (millis() < tiempo + periodo3){
            }
            } else if (header.indexOf("GET /2/off") >= 0) {
@@ -191,6 +266,32 @@ void loop(){
               servo_2.write(0);
               while (millis() < tiempo + periodo3){
             }
+=======
+             /*****************/
+              //delay(1000);
+                  while (millis() < tiempo + periodo3){
+
+
+    
+                  /* ESPERA */
+
+                        }
+              /**************/
+            } else if (header.indexOf("GET /2/off") >= 0) {
+              Serial.println("GPIO 2 off");
+              output2State = "off";
+              servo_2.write(0);
+              /*****************/
+              //delay(1000);
+                  while (millis() < tiempo + periodo3){
+
+
+    
+                  /* ESPERA */
+
+                        }
+              /**************/
+>>>>>>> d724e40d58ded634b36e37d145ae5fc2ff608414
               digitalWrite(output2, LOW);
             } else if (header.indexOf("GET /14/on") >= 0) {
               Serial.println("GPIO 14 on");
@@ -240,6 +341,10 @@ void loop(){
             } else {
               client.println("<p><a href=\"/5/off\"><button class=\"button button2\">OFF</button></a></p>");
             }  
+<<<<<<< HEAD
+=======
+               
+>>>>>>> d724e40d58ded634b36e37d145ae5fc2ff608414
                
            // Muestra el estado actual y los botones ON / OFF para GPIO 4 
             client.println("<p>Cuarto 3 - State " + output3State + "</p>");
@@ -249,12 +354,20 @@ void loop(){
             } else {
               client.println("<p><a href=\"/3/off\"><button class=\"button button2\">OFF</button></a></p>");
             }
+<<<<<<< HEAD
+=======
+
+>>>>>>> d724e40d58ded634b36e37d145ae5fc2ff608414
             client.println("<p>Cuarto 4 - State " + output21State + "</p>");
             if (output21State=="off") {
               client.println("<p><a href=\"/21/on\"><button class=\"button\">ON</button></a></p>");
             } else {
               client.println("<p><a href=\"/21/off\"><button class=\"button button2\">OFF</button></a></p>");
             } 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d724e40d58ded634b36e37d145ae5fc2ff608414
             client.println("<p>Cuarto 5 - State " + output15State + "</p>");
             if (output15State=="off") {
               client.println("<p><a href=\"/15/on\"><button class=\"button\">ON</button></a></p>");
