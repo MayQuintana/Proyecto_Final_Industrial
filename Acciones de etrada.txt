@@ -1,0 +1,9 @@
+Cuarto_1       ===> 16
+Cuarto_2       ===> 5
+Cuarto_3       ===> 3
+Cuarto_4       ===> 21
+Cuarto_5       ===> 15
+servo_1        ===> 4 
+SerVo_2        ===> 2
+Ventilacion_1  ===> 14
+Ventilacion_2  ===> 12
